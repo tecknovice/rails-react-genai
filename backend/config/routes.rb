@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users,
+  devise_for :users, 
+              defaults: { format: :json },
+              path: '',
+              path_names: {
+                registration: 'register',
+                sign_in: 'login',
+                sign_out: 'logout'
+             },
               controllers: {
                 sessions: 'users/sessions',
                 registrations: 'users/registrations'
