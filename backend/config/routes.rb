@@ -18,6 +18,11 @@ Rails.application.routes.draw do
   get "unprotected" => "child#unprotected", as: :unprotected_route
 
   resources :blogs
+  # Admin namespace for admin-only controllers
+  namespace :admin do
+    resources :users  # This maps to your Admin::UsersController
+  end
+
   
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

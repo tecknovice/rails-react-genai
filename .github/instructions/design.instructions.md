@@ -187,6 +187,13 @@ Build reusable components:
 | POST   | /register | Register    |
 | DELETE | /logout   | Logout      |
 
+### Profile
+
+| Method | Endpoint | Description         |
+| ------ | -------- | ------------------- |
+| GET    | /profile | Get user profile    |
+| PUT    | /profile | Update user profile |
+
 ### Blogs
 
 | Method | Endpoint            | Description             |
