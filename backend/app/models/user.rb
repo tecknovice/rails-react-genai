@@ -4,6 +4,8 @@ class User < ApplicationRecord
          :jwt_authenticatable,
          jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null
 
+  has_many :blogs, dependent: :destroy
+
   # Custom validations
   validates :email, presence: true, uniqueness: true, 
             format: { with: URI::MailTo::EMAIL_REGEXP, 
