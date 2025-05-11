@@ -1,3 +1,7 @@
+---
+applyTo: "**"
+---
+
 # 📝 Web Application Design Document
 
 ## 📌 Overview
