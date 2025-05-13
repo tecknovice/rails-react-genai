@@ -210,6 +210,7 @@ Build reusable components:
 | Method | Endpoint          | Description             |
 | ------ | ----------------- | ----------------------- |
 | GET    | /admin/users      | List all users          |
+| GET    | /admin/users/\:id | View single user        |
 | PATCH  | /admin/users/\:id | Update user role/status |
 | DELETE | /admin/users/\:id | Delete user             |
 

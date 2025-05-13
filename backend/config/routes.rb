@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get "protected" => "child#protected", as: :protected_route
   get "unprotected" => "child#unprotected", as: :unprotected_route
 
+  resource :profile, only: [:show, :update]
+
   resources :blogs
   # Admin namespace for admin-only controllers
   namespace :admin do
