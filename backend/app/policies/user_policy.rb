@@ -6,6 +6,10 @@ class UserPolicy < ApplicationPolicy
     end
   end
   
+  def index?
+    user&.admin?
+  end
+
   # Users can view their own profile, admins can view any profile
   def show?
     user&.admin? || record.id == user&.id

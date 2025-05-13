@@ -4,6 +4,9 @@ module Admin
     before_action :set_user, only: [:show, :update, :destroy]
     
     def index
+      authorize User
+      
+      # Use policy_scope to limit the users returned based on the user's role
       @users = policy_scope(User)
       render json: @users
     end
