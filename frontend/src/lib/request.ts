@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import client from "./client";
 
-export async function request<T>(
+export default async function request<T>(
   method: string,
   url: string,
   data?: any

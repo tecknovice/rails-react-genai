@@ -36,13 +36,13 @@ root/
 
 ## ⚙️ Technologies
 
-| Layer    | Tech Stack                                  |
-| -------- | ------------------------------------------- |
-| Backend  | Ruby on Rails, Devise, Devise-JWT, Pundit   |
-| Frontend | React, TypeScript, Vite, React Query, Redux |
-| Styling  | TailwindCSS                                 |
-| Database | MySQL                                       |
-| Auth     | JWT (via Devise-JWT)                        |
+| Layer    | Tech Stack                                         |
+| -------- | -------------------------------------------------- |
+| Backend  | Ruby on Rails, Devise, Devise-JWT, Pundit          |
+| Frontend | React, TypeScript, Vite, React Query, React Router |
+| Styling  | TailwindCSS                                        |
+| Database | MySQL                                              |
+| Auth     | JWT (via Devise-JWT)                               |
 
 ---
 
@@ -132,7 +132,7 @@ end
 ### Dependencies
 
 ```bash
-npm install axios react-query @reduxjs/toolkit react-redux react-router-dom@6 tailwindcss
+npm install axios react-query react-router-dom@6 tailwindcss
 ```
 
 ### Folder Structure (src/)

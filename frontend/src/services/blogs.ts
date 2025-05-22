@@ -1,4 +1,4 @@
-import { request } from "@/utils/request";
+import request from "@/lib/request";
 
 import type { Blog, CreateBlogInput, UpdateBlogInput } from "@/types/blog";
 

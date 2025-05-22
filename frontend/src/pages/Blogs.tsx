@@ -20,8 +20,8 @@ export default function Blogs() {
         {data &&
           data.map((blog) => (
             <li key={blog.id}>
-              <h2>{blog.title}</h2>
-              <p>{blog.content}</p>
+              <h2>Title: {blog.title}</h2>
+              <p>Content: {blog.content}</p>
             </li>
           ))}
       </ul>
