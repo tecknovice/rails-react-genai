@@ -1,6 +1,6 @@
-import { request } from "../utils/request";
+import { request } from "@/utils/request";
 
-import type { Blog, CreateBlogInput, UpdateBlogInput } from "../types/blog";
+import type { Blog, CreateBlogInput, UpdateBlogInput } from "@/types/blog";
 
 export const getBlogs = async () => {
   const response = await request<Blog[]>("GET", "/blogs");
