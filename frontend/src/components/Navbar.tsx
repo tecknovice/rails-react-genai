@@ -2,6 +2,10 @@ import { useState } from "react";
 import { NavLink } from "react-router";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import type { RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/slices/authSlice";
+import { toast } from "sonner";
 
 // We'll implement this with auth context later
 const useAuth = () => {
@@ -16,7 +20,17 @@ const useAuth = () => {
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const { isAuthenticated, user, logout } = useAuth();
+
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector(
+    (state: RootState) => state.auth
+  );
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Successfully logged out");
+    setIsProfileDropdownOpen(false);
+  };
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -125,7 +139,7 @@ export default function Navbar() {
                       New Blog
                     </NavLink>
                     <button
-                      onClick={logout}
+                      onClick={handleLogout}
                       className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >

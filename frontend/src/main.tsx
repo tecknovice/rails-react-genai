@@ -8,32 +8,58 @@ import "./index.css";
 import Blogs from "@/pages/Blogs.tsx";
 import Register from "@/pages/Register.tsx";
 import Login from "@/pages/Login.tsx";
+import DashboardRoute from "@/components/DashboardRoute";
 import DashboardLayout from "@/layouts/Dashboard.tsx";
 import DashboardHome from "@/pages/dashboard/home";
-import DefaultLayout from "./layouts/Default";
-import Home from "./pages/Home";
+import DefaultLayout from "@/layouts/Default";
+import Home from "@/pages/Home";
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
+import AdminRoute from "@/components/AdminRoute";
+import AdminLayout from "@/layouts/Admin";
+import AdminHome from "@/pages/admin/home";
 
 // Create a client
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route element={<DefaultLayout />}>
-            <Route index element={<Home />} />
-            <Route path="/blogs" element={<Blogs />} />
-          </Route>
-          <Route path="dashboard" element={<DashboardLayout />}>
-            <Route index element={<DashboardHome />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <Toaster />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route element={<DefaultLayout />}>
+              <Route index element={<Home />} />
+              <Route path="/blogs" element={<Blogs />} />
+            </Route>
+            <Route
+              path="/dashboard"
+              element={
+                <DashboardRoute>
+                  <DashboardLayout />
+                </DashboardRoute>
+              }
+            >
+              <Route index element={<DashboardHome />} />
+            </Route>
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminLayout />
+                </AdminRoute>
+              }
+            >
+              <Route index element={<AdminHome />} />
+              {/* Add other admin routes */}
+            </Route>
+          </Routes>
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <Toaster />
+      </QueryClientProvider>
+    </Provider>
   </StrictMode>
 );

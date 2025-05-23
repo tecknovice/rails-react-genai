@@ -17,6 +17,13 @@ import {
 } from "@/components/ui/form";
 import { login } from "@/services/auth";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import {
+  loginFailure,
+  loginRequest,
+  loginSuccess,
+} from "@/redux/slices/authSlice";
+import { useNavigate } from "react-router";
 
 const loginSchema = z.object({
   email: z.string().email({
@@ -32,7 +39,8 @@ export function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const form = useForm<LoginCredentials>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -43,14 +51,21 @@ export function LoginForm({
 
   const onSubmit = async (data: LoginCredentials) => {
     setIsLoading(true);
+    dispatch(loginRequest());
     try {
       // Login API call will go here
       const response = await login(data);
       if (response.error) {
         // Handle error
         toast(response.error);
+        dispatch(loginFailure(response.error));
       }
+      const { user, token } = response.payload;
       // On success, redirect to dashboard
+      if (user && token) {
+        dispatch(loginSuccess({ user, token }));
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Login failed", error);
     } finally {
