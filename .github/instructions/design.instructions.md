@@ -36,13 +36,13 @@ root/
 
 ## ⚙️ Technologies
 
-| Layer    | Tech Stack                                         |
-| -------- | -------------------------------------------------- |
-| Backend  | Ruby on Rails, Devise, Devise-JWT, Pundit          |
-| Frontend | React, TypeScript, Vite, React Query, React Router |
-| Styling  | TailwindCSS                                        |
-| Database | MySQL                                              |
-| Auth     | JWT (via Devise-JWT)                               |
+| Layer    | Tech Stack                                                |
+| -------- | --------------------------------------------------------- |
+| Backend  | Ruby on Rails, Devise, Devise-JWT, Pundit                 |
+| Frontend | React, TypeScript, Vite, React Query, Redux, React Router |
+| Styling  | TailwindCSS                                               |
+| Database | MySQL                                                     |
+| Auth     | JWT (via Devise-JWT)                                      |
 
 ---
 
@@ -132,24 +132,23 @@ end
 ### Dependencies
 
 ```bash
-npm install axios react-query react-router-dom@6 tailwindcss
+npm install axios react-query react-router tailwindcss
 ```
 
 ### Folder Structure (src/)
 
 ```
 src/
-├── api/                  # Axios + React Query calls
+├── services/             # Api calls
 ├── auth/                 # Login/Register/Token logic
 ├── components/           # Reusable UI
 ├── features/             # Redux slices for user/blogs
 ├── pages/                # Route pages (Home, Dashboard, Admin)
-├── routes/               # Protected routes
 ├── types/                # TypeScript interfaces
 └── main.tsx
 ```
 
-### Routing (React Router v6)
+### Routing (React Router v7)
 
 ```tsx
 <Route path="/" element={<Home />} />
@@ -162,7 +161,7 @@ src/
 ### Authentication
 
 - Store JWT in **HTTP-only cookies** (recommended) or **localStorage**.
-- Auth state managed with **Redux** or **React Query context**.
+- Auth state managed with **Redux** .
 
 ### State Management
 

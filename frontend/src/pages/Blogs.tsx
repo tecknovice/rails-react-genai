@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getBlogs } from "@/services/blogs";
+import { getBlogs } from "@/services/blog";
 import { Button } from "@/components/ui/button";
 import {
   Calendar,
@@ -11,7 +11,6 @@ import {
   X,
 } from "lucide-react";
 import { Link } from "react-router";
-import Navbar from "@/components/navbar";
 import {
   Card,
   CardContent,
@@ -31,8 +30,11 @@ export default function Blogs() {
     queryFn: getBlogs,
   });
 
+  // Safely access payload with fallback to empty array
+  const payload = data?.payload || [];
+
   // Filter blogs based on search term
-  const filteredBlogs = data?.filter(
+  const filteredBlogs = payload.filter(
     (blog) =>
       blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       blog.content.toLowerCase().includes(searchTerm.toLowerCase())

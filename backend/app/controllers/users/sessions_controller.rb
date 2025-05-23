@@ -30,6 +30,4 @@ class Users::SessionsController < Devise::SessionsController
   def auth_options
     { scope: resource_name, recall: "#{controller_path}#auth_failed" }
   end
-  
-  
 end
