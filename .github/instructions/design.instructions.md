@@ -24,7 +24,7 @@ root/
 ├── frontend/             # React + Vite + TS
 │   ├── src/
 │   │   ├── components/
-│   │   ├── features/
+│   │   ├── redux/
 │   │   ├── pages/
 │   │   └── ...
 │   └── ...
@@ -140,9 +140,8 @@ npm install axios react-query react-router tailwindcss
 ```
 src/
 ├── services/             # Api calls
-├── auth/                 # Login/Register/Token logic
 ├── components/           # Reusable UI
-├── features/             # Redux slices for user/blogs
+├── redux/                # Redux slices for auth and role
 ├── pages/                # Route pages (Home, Dashboard, Admin)
 ├── types/                # TypeScript interfaces
 └── main.tsx
@@ -160,7 +159,7 @@ src/
 
 ### Authentication
 
-- Store JWT in **HTTP-only cookies** (recommended) or **localStorage**.
+- Store JWT in **localStorage**.
 - Auth state managed with **Redux** .
 
 ### State Management
