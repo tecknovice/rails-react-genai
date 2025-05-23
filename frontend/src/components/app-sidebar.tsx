@@ -1,16 +1,5 @@
 import * as React from "react";
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react";
+import { BookOpen, Bot, User, Settings2, File } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -18,7 +7,6 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
 
@@ -32,40 +20,48 @@ const data = {
 
   navMain: [
     {
-      title: "Playground",
+      title: "Blogs",
       url: "#",
-      icon: SquareTerminal,
+      icon: File,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Blogs List",
           url: "#",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
+          title: "Add Blog",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Users",
+      url: "#",
+      icon: User,
+      isActive: true,
+      items: [
+        {
+          title: "Users List",
+          url: "#",
+        },
+        {
+          title: "Add User",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "LLMs",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
+          title: "Models",
           url: "#",
         },
         {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
+          title: "MCP List",
           url: "#",
         },
       ],
