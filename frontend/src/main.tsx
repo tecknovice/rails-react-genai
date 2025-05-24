@@ -19,6 +19,8 @@ import AdminRoute from "@/components/admin-route";
 import AdminLayout from "@/layouts/admin";
 import AdminHome from "@/pages/admin/home";
 import AuthInitializer from "@/components/auth-initializer";
+import BlogList from "@/pages/dashboard/blog/list";
+import BlogAdd from "@/pages/dashboard/blog/add";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -34,7 +36,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/login" element={<Login />} />
             <Route element={<DefaultLayout />}>
               <Route index element={<Home />} />
-              <Route path="/blogs" element={<Blogs />} />
+              <Route path="blogs" element={<Blogs />} />
             </Route>
             <Route
               path="/dashboard"
@@ -45,6 +47,8 @@ createRoot(document.getElementById("root")!).render(
               }
             >
               <Route index element={<DashboardHome />} />
+              <Route path="blog/list" element={<BlogList />} />
+              <Route path="blog/add" element={<BlogAdd />} />
             </Route>
             <Route
               path="/admin"

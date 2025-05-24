@@ -23,11 +23,11 @@ const data = {
       items: [
         {
           title: "Blogs List",
-          url: "#",
+          url: "/dashboard/blog/list",
         },
         {
           title: "Add Blog",
-          url: "#",
+          url: "/dashboard/blog/add",
         },
       ],
     },
@@ -118,9 +118,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        {user && <NavUser user={user} />}
-      </SidebarFooter>
+      <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
