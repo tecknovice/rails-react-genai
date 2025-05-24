@@ -7,16 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/slices/authSlice";
 import { toast } from "sonner";
 
-// We'll implement this with auth context later
-const useAuth = () => {
-  // This is a mock implementation for now
-  return {
-    isAuthenticated: false,
-    user: null,
-    logout: () => console.log("Logout clicked"),
-  };
-};
-
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -259,7 +249,7 @@ export default function Navbar() {
                   New Blog
                 </NavLink>
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="w-full text-left block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
                 >
                   Sign out

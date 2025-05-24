@@ -8,16 +8,17 @@ import "./index.css";
 import Blogs from "@/pages/Blogs.tsx";
 import Register from "@/pages/Register.tsx";
 import Login from "@/pages/Login.tsx";
-import DashboardRoute from "@/components/DashboardRoute";
-import DashboardLayout from "@/layouts/Dashboard.tsx";
+import DashboardRoute from "@/components/dashboard-route";
+import DashboardLayout from "@/layouts/dashboard";
 import DashboardHome from "@/pages/dashboard/home";
-import DefaultLayout from "@/layouts/Default";
+import DefaultLayout from "@/layouts/default";
 import Home from "@/pages/Home";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
-import AdminRoute from "@/components/AdminRoute";
-import AdminLayout from "@/layouts/Admin";
+import AdminRoute from "@/components/admin-route";
+import AdminLayout from "@/layouts/admin";
 import AdminHome from "@/pages/admin/home";
+import AuthInitializer from "@/components/auth-initializer";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
+      <AuthInitializer />
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>

@@ -1,3 +1,5 @@
+import { Outlet } from "react-router";
+
 export default function AdminLayout() {
   return (
     <div className="flex flex-col h-screen">
@@ -6,7 +8,7 @@ export default function AdminLayout() {
       </header>
       <main className="flex-grow p-4">
         {/* Add your admin content here */}
-        <p>Welcome to the admin dashboard!</p>
+        <Outlet />
       </main>
       <footer className="bg-gray-800 text-white p-4 text-center">
         &copy; 2023 Your Company

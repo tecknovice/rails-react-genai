@@ -1,10 +1,11 @@
 import request from "@/lib/request";
 
-import type {
-  LoginCredentials,
-  LoginResponse,
-  RegisterData,
-  UserUpdateData,
+import {
+  type User,
+  type LoginCredentials,
+  type LoginResponse,
+  type RegisterData,
+  type UserUpdateData,
 } from "@/types/user";
 
 export const register = async (data: RegisterData) => {
@@ -24,7 +25,7 @@ export const logout = async () => {
   return response;
 };
 export const getProfile = async () => {
-  const response = await request("GET", "/profile");
+  const response = await request<User>("GET", "/profile");
   return response;
 };
 export const updateProfile = async (data: UserUpdateData) => {

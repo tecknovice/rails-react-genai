@@ -60,7 +60,7 @@ export function LoginForm({
         toast(response.error);
         dispatch(loginFailure(response.error));
       }
-      const { user, token } = response.payload;
+      const { user, token } = response.payload!;
       // On success, redirect to dashboard
       if (user && token) {
         dispatch(loginSuccess({ user, token }));
