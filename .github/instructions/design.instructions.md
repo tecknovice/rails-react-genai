@@ -6,7 +6,7 @@ applyTo: "**"
 
 ## 📌 Overview
 
-This web application is a blogging platform with user registration, authentication, and role-based authorization. Users can manage their profiles and blogs. Admins can manage all users and blogs. Public users can read published blogs.
+This web application is a CMS using genAI with user registration, authentication, and role-based authorization. Users can manage their profiles and contents. Admins can manage all users and contents. Public users can read published contents.
 
 ---
 
@@ -48,11 +48,11 @@ root/
 
 ## 🔐 Roles and Permissions
 
-| Role   | Capabilities                                                            |
-| ------ | ----------------------------------------------------------------------- |
-| Public | View published blogs                                                    |
-| User   | Register, login, manage profile, create/update/publish/delete own blogs |
-| Admin  | Manage all users, manage all blogs                                      |
+| Role   | Capabilities                                                               |
+| ------ | -------------------------------------------------------------------------- |
+| Public | View published contents                                                    |
+| User   | Register, login, manage profile, create/update/publish/delete own contents |
+| Admin  | Manage all users, manage all contents                                      |
 
 Use **Pundit** for role-based policies on the backend.
 
@@ -164,7 +164,7 @@ src/
 
 ### State Management
 
-- **React Query** for server-side state (blogs, users).
+- **React Query** for server-side state (contents, users).
 - **Redux Toolkit** for auth state and role.
 
 ### Tailwind UI Components
@@ -240,7 +240,7 @@ Build reusable components:
 - [ ] Blog CRUD operations
 - [ ] Role-based access with Pundit
 - [ ] Admin management UI
-- [ ] Public view for published blogs
+- [ ] Public view for published contents
 - [ ] Responsive UI with Tailwind
 - [ ] API error handling
 - [ ] Secure authentication (JWT + refresh tokens optional)
