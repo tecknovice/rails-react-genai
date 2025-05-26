@@ -1,4 +1,4 @@
-# 🚀 Rails React Blog Platform
+# 🚀 Rails React CMS Platform with genAI
 
 A modern full-stack CMS using genAI built with Ruby on Rails API backend and React TypeScript frontend.
 
