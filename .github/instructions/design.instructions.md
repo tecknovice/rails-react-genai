@@ -196,7 +196,7 @@ Build reusable components:
 
 | Method | Endpoint            | Description             |
 | ------ | ------------------- | ----------------------- |
-| GET    | /blogs              | List published blogs    |
+| GET    | /blogs              | List blogs (owner: her blogs, unauthenticated user: published blogs, admin: all blogs)   |
 | GET    | /blogs/\:id         | View single blog        |
 | POST   | /blogs              | Create (auth required)  |
 | PUT    | /blogs/\:id         | Update (owner or admin) |

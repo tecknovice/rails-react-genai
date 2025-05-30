@@ -19,7 +19,11 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :update]
 
-  resources :blogs
+  resources :blogs do
+    member do
+      patch :publish
+    end
+  end
   # Admin namespace for admin-only controllers
   namespace :admin do
     resources :users  # This maps to your Admin::UsersController

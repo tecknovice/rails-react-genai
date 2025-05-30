@@ -25,10 +25,10 @@ export const deleteBlog = async (id: number) => {
   return response;
 };
 export const publishBlog = async (id: number) => {
-  const response = await request<Blog>("POST", `/blogs/${id}/publish`);
+  const response = await request<Blog>("PATCH", `/blogs/${id}/publish`);
   return response;
 };
 export const unpublishBlog = async (id: number) => {
-  const response = await request<Blog>("POST", `/blogs/${id}/unpublish`);
+  const response = await request<Blog>("PATCH", `/blogs/${id}/unpublish`);
   return response;
 };
