@@ -5,25 +5,28 @@ class BlogPolicy < ApplicationPolicy
         # Admins can see all blogs
         scope.all
       elsif user
-        # Users can see all published blogs plus their own unpublished blogs
-        scope.where(published: true).or(scope.where(user_id: user.id))
+        # Users can see their own blogs
+        scope.where(user_id: user.id)
       else
         # Public users can only see published blogs
         scope.where(published: true)
       end
     end
   end
-  
-  # Anyone can see a published blog
-  # Authors can see their unpublished blogs
+
+  def index?
+    true
+  end
+
+  # Authors can see their own blogs
   # Admins can see any blog
   def show?
-    record.published? || user&.admin? || record.user_id == user&.id
+    user&.admin? || record.user_id == user&.id
   end
   
   # Only logged in users can create blogs
   def create?
-    !user.nil?
+    user.present?
   end
   
   # Only authors or admins can update
@@ -38,6 +41,10 @@ class BlogPolicy < ApplicationPolicy
   
   # Special action to handle publishing a blog
   def publish?
+    update?
+  end
+
+  def unpublish?
     update?
   end
 end

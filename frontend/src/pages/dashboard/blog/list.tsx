@@ -35,7 +35,12 @@ import {
 } from "lucide-react";
 
 // API service - using correct path
-import { getBlogs, deleteBlog, publishBlog } from "@/services/blog";
+import {
+  getBlogs,
+  deleteBlog,
+  publishBlog,
+  unpublishBlog,
+} from "@/services/blog";
 
 // Types
 interface Blog {
@@ -79,14 +84,31 @@ export default function BlogList() {
     mutationFn: publishBlog,
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["blogs"] });
+      queryClient.invalidateQueries({ queryKey: ["getBlogs"] });
       toast("Blog updated", {
-        description: "Your blog's published status has been updated.",
+        description: "Your blog has been published.",
       });
     },
     onError: (error) => {
       toast.error("Error", {
-        description: "Failed to update published status. Please try again.",
+        description: "Failed to publish status. Please try again.",
+      });
+    },
+  });
+
+  // Publish blog mutation
+  const unpublishMutation = useMutation({
+    mutationFn: unpublishBlog,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["getBlogs"] });
+      toast("Blog unpublished", {
+        description: "Your blog has been unpublished.",
+      });
+    },
+    onError: (error) => {
+      toast.error("Error", {
+        description: "Failed to unpublish status. Please try again.",
       });
     },
   });
@@ -99,7 +121,11 @@ export default function BlogList() {
   };
 
   const handlePublish = (id: number, currentStatus: boolean) => {
-    publishMutation.mutate(id);
+    if (currentStatus) {
+      unpublishMutation.mutate(id);
+    } else {
+      publishMutation.mutate(id);
+    }
   };
 
   const handleEdit = (id: number) => {

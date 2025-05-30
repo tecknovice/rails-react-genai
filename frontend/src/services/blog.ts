@@ -2,6 +2,16 @@ import request from "@/lib/request";
 
 import type { Blog, CreateBlogInput, UpdateBlogInput } from "@/types/blog";
 
+export const getPublicBlogs = async () => {
+  const response = await request<Blog[]>("GET", "/public/blogs");
+  return response;
+};
+
+export const getPublicBlogById = async (id: number) => {
+  const response = await request<Blog[]>("GET", `/public/blogs/${id}`);
+  return response;
+};
+
 export const getBlogs = async () => {
   const response = await request<Blog[]>("GET", "/blogs");
   return response;

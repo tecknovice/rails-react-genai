@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getBlogs } from "@/services/blog";
+import { getPublicBlogs } from "@/services/blog";
 import { Button } from "@/components/ui/button";
 import {
   Calendar,
@@ -27,7 +27,7 @@ export default function Blogs() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["blogs"],
-    queryFn: getBlogs,
+    queryFn: getPublicBlogs,
   });
 
   // Safely access payload with fallback to empty array

@@ -36,13 +36,13 @@ root/
 
 ## ⚙️ Technologies
 
-| Layer    | Tech Stack                                                |
-| -------- | --------------------------------------------------------- |
-| Backend  | Ruby on Rails, Devise, Devise-JWT, Pundit                 |
-| Frontend | React, TypeScript, Vite, React Query, Redux, React Router |
-| Styling  | TailwindCSS                                               |
-| Database | MySQL                                                     |
-| Auth     | JWT (via Devise-JWT)                                      |
+| Layer    | Tech Stack                                                        |
+| -------- | ----------------------------------------------------------------- |
+| Backend  | Ruby on Rails, Devise, Devise-JWT, Pundit, ActiveAdmin            |
+| Frontend | React, TypeScript, Vite, React Query, Redux Toolkit, React Router |
+| Styling  | TailwindCSS                                                       |
+| Database | MySQL                                                             |
+| Auth     | JWT (via Devise-JWT)                                              |
 
 ---
 
@@ -68,6 +68,7 @@ gem 'devise-jwt'
 gem 'pundit'
 gem 'rack-cors'
 gem 'mysql2'
+gem 'activeadmin'
 ```
 
 ### Models
@@ -112,11 +113,11 @@ Example Policy:
 ```ruby
 class BlogPolicy < ApplicationPolicy
   def update?
-    user.admin? || record.user_id == user.id
+    record.user_id == user.id
   end
 
   def destroy?
-    user.admin? || record.user_id == user.id
+    record.user_id == user.id
   end
 
   def publish?
@@ -132,7 +133,7 @@ end
 ### Dependencies
 
 ```bash
-npm install axios react-query react-router tailwindcss
+npm install axios react-query react-router redux tailwindcss
 ```
 
 ### Folder Structure (src/)
@@ -185,32 +186,43 @@ Build reusable components:
 | POST   | /register | Register    |
 | DELETE | /logout   | Logout      |
 
-### Profile
+### Profile (Authenticated User)
 
-| Method | Endpoint | Description         |
-| ------ | -------- | ------------------- |
-| GET    | /profile | Get user profile    |
-| PUT    | /profile | Update user profile |
+| Method | Endpoint | Description        |
+| ------ | -------- | ------------------ |
+| GET    | /profile | Get own profile    |
+| PUT    | /profile | Update own profile |
 
-### Blogs
+> All routes protected by Devise JWT and Pundit policies.
 
-| Method | Endpoint            | Description             |
-| ------ | ------------------- | ----------------------- |
-| GET    | /blogs              | List blogs (owner: her blogs, unauthenticated user: published blogs, admin: all blogs)   |
-| GET    | /blogs/\:id         | View single blog        |
-| POST   | /blogs              | Create (auth required)  |
-| PUT    | /blogs/\:id         | Update (owner or admin) |
-| DELETE | /blogs/\:id         | Delete (owner or admin) |
-| PATCH  | /blogs/\:id/publish | Publish blog            |
+### Blogs (Authenticated User)
 
-### Admin
+| Method | Endpoint              | Description            |
+| ------ | --------------------- | ---------------------- |
+| GET    | /blogs                | List own blogs         |
+| GET    | /blogs/\:id           | View own blog          |
+| POST   | /blogs                | Create (auth required) |
+| PUT    | /blogs/\:id           | Update own blog        |
+| DELETE | /blogs/\:id           | Delete own blog        |
+| PATCH  | /blogs/\:id/publish   | Publish own blog       |
+| PATCH  | /blogs/\:id/unpublish | Unpublish own blog     |
 
-| Method | Endpoint          | Description             |
-| ------ | ----------------- | ----------------------- |
-| GET    | /admin/users      | List all users          |
-| GET    | /admin/users/\:id | View single user        |
-| PATCH  | /admin/users/\:id | Update user role/status |
-| DELETE | /admin/users/\:id | Delete user             |
+> All routes protected by Devise JWT and Pundit policies.
+
+### Blogs (Unauthenticated User)
+
+| Method | Endpoint           | Description          |
+| ------ | ------------------ | -------------------- |
+| GET    | /public/blogs      | List published blogs |
+| GET    | /public/blogs/\:id | View published blog  |
+
+### Admin (ActiveAdmin)
+
+- Access at: `/admin`
+- Use `ActiveAdmin.register User` and `ActiveAdmin.register Blog` to expose models.
+- Admins can:
+  - View/Edit/Delete users
+  - View/Edit/Delete any contents
 
 ---
 
@@ -227,7 +239,7 @@ Build reusable components:
 - **Frontend:** Vercel, Netlify.
 - **Env Vars:**
 
-  - `JWT_SECRET_KEY`
+  - `DEVISE_JWT_SECRET_KEY`
   - `DATABASE_URL`
   - `API_URL`
 

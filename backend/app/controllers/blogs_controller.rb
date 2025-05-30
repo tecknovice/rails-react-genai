@@ -1,30 +1,20 @@
 class BlogsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_blog, only: [:show, :update, :destroy, :publish]
+  before_action :authenticate_user!
+  before_action :set_blog, only: [:show, :update, :destroy, :publish, :unpublish]
 
+  # Regular CRUD actions
+  
   # GET /blogs
   def index
     @blogs = policy_scope(Blog)
-    
-    # Transform blogs to include user information without passwords
-    blogs_with_users = @blogs.map do |blog|
-      blog_json = blog.as_json
-      blog_json["user"] = blog.user.as_json(except: [:password, :encrypted_password, :reset_password_token])
-      blog_json
-    end
-
-  render json: blogs_with_users
+    authorize @blogs
+    render json: @blogs
   end
 
   # GET /blogs/:id
   def show
     authorize @blog
-
-    # Include user information without password
-    blog_with_user = @blog.as_json
-    blog_with_user["user"] = @blog.user.as_json(except: [:password, :encrypted_password, :reset_password_token])
-    
-    render json: blog_with_user
+    render json:  @blog
   end
 
   # POST /blogs
@@ -65,6 +55,15 @@ class BlogsController < ApplicationController
     else
       render json: @blog.errors, status: :unprocessable_entity
     end
+  end
+
+  def unpublish
+    authorize @blog, :unpublish?
+    if @blog.update(published: false)
+      render json: @blog
+    else
+      render json: @blog.errors, status: :unprocessable_entity
+    end   
   end
 
   private

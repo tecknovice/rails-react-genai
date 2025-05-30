@@ -22,8 +22,15 @@ Rails.application.routes.draw do
   resources :blogs do
     member do
       patch :publish
+      patch :unpublish
     end
   end
+
+  # Public routes
+  namespace :public do
+    resources :blogs, only: [:index, :show]
+  end
+
   # Admin namespace for admin-only controllers
   namespace :admin do
     resources :users  # This maps to your Admin::UsersController
