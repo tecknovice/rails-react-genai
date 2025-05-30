@@ -3,6 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
+import { createBlog } from "@/services/blog";
 
 const blogSchema = z.object({
   title: z
@@ -38,6 +42,8 @@ const blogSchema = z.object({
 });
 
 export default function BlogAdd() {
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof blogSchema>>({
     resolver: zodResolver(blogSchema),
     defaultValues: {
@@ -47,11 +53,20 @@ export default function BlogAdd() {
     },
   });
 
+  const addMutation = useMutation({
+    mutationFn: createBlog,
+    onSuccess: () => {
+      toast.success("Blog created successfully!");
+      navigate("/dashboard/blogs");
+    },
+    onError: (error) => {
+      toast.error("Failed to create blog. Please try again.");
+      console.error("Error creating blog:", error);
+    },
+  });
+
   function onSubmit(values: z.infer<typeof blogSchema>) {
-    // TODO: Submit to API
-    console.log(values);
-    // Here you would typically make an API call to create the blog
-    // Example: createBlog(values)
+    addMutation.mutate(values);
   }
 
   return (
@@ -136,11 +151,14 @@ export default function BlogAdd() {
             />
 
             <div className="flex gap-4">
-              <Button type="submit">Create Blog</Button>
+              <Button type="submit" disabled={addMutation.isPending}>
+                {addMutation.isPending ? "Creating..." : "Create Blog"}
+              </Button>
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => form.reset()}
+                disabled={addMutation.isPending}
               >
                 Reset
               </Button>
