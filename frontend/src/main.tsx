@@ -21,6 +21,7 @@ import AdminHome from "@/pages/admin/home";
 import AuthInitializer from "@/components/auth-initializer";
 import BlogList from "@/pages/dashboard/blog/list";
 import BlogAdd from "@/pages/dashboard/blog/add";
+import BlogEdit from "@/pages/dashboard/blog/edit";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -49,6 +50,7 @@ createRoot(document.getElementById("root")!).render(
               <Route index element={<DashboardHome />} />
               <Route path="blog/list" element={<BlogList />} />
               <Route path="blog/add" element={<BlogAdd />} />
+              <Route path="blog/edit/:id" element={<BlogEdit />} />
             </Route>
             <Route
               path="/admin"
