@@ -120,7 +120,7 @@ export default function BlogList() {
           </p>
         </div>
         <Button asChild>
-          <Link to="/dashboard/blog/new">
+          <Link to="/dashboard/blog/add">
             <Plus className="mr-2 h-4 w-4" /> New Blog
           </Link>
         </Button>
