@@ -100,6 +100,9 @@ GEM
       devise (~> 4.0)
       warden-jwt_auth (~> 0.10)
     dotenv (3.1.8)
+    dotenv-rails (3.1.8)
+      dotenv (= 3.1.8)
+      railties (>= 6.1)
     drb (2.2.1)
     dry-auto_inject (1.1.0)
       dry-core (~> 1.1)
@@ -182,6 +185,8 @@ GEM
     nokogiri (1.18.8-arm-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.18.8-arm-linux-musl)
+      racc (~> 1.4)
+    nokogiri (1.18.8-arm64-darwin)
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-darwin)
       racc (~> 1.4)
@@ -314,6 +319,7 @@ GEM
     thor (1.3.2)
     thruster (0.1.13)
     thruster (0.1.13-aarch64-linux)
+    thruster (0.1.13-arm64-darwin)
     thruster (0.1.13-x86_64-darwin)
     thruster (0.1.13-x86_64-linux)
     timeout (0.4.3)
@@ -343,6 +349,7 @@ PLATFORMS
   aarch64-linux-musl
   arm-linux-gnu
   arm-linux-musl
+  arm64-darwin-24
   x86_64-darwin-23
   x86_64-linux
   x86_64-linux-gnu
@@ -355,6 +362,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  dotenv-rails
   jbuilder
   kamal
   mysql2 (~> 0.5)
