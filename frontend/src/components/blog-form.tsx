@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Blog } from "@/types/blog";
-import { generateText } from "@/services/genai";
+import { AIContentGeneratorDialog } from "@/components/ai-content-generator-dialog";
 
 const blogSchema = z.object({
   title: z
@@ -28,15 +28,6 @@ const blogSchema = z.object({
     .max(100, {
       message: "Title must not exceed 100 characters.",
     }),
-  prompt: z
-    .string()
-    .min(5, {
-      message: "Prompt must be at least 5 characters.",
-    })
-    .max(1000, {
-      message: "Prompt must not exceed 1000 characters.",
-    })
-    .optional(),
   content: z.string().min(10, {
     message: "Content must be at least 10 characters.",
   }),
@@ -64,7 +55,6 @@ export function BlogForm({
     resolver: zodResolver(blogSchema),
     defaultValues: {
       title: initialData?.title || "",
-      prompt: initialData?.prompt || "",
       content: initialData?.content || "",
       published: initialData?.published || false,
     },
@@ -74,12 +64,8 @@ export function BlogForm({
     onSubmit(values);
   }
 
-  const handleGenerateContent = async () => {
-    const prompt = form.getValues("prompt");
-    if (prompt) {
-      const response = await generateText(prompt);
-      if (response.payload) form.setValue("content", response.payload.content);
-    }
+  const handleContentGenerated = (generatedContent: string) => {
+    form.setValue("content", generatedContent);
   };
 
   const isEditing = mode === "edit";
@@ -128,45 +114,18 @@ export function BlogForm({
 
             <FormField
               control={form.control}
-              name="prompt"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Prompt (Optional)</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Textarea
-                        placeholder="Enter a prompt for your blog post..."
-                        className="min-h-[100px] pr-28"
-                        {...field}
-                        aria-invalid={
-                          form.formState.errors.prompt ? "true" : "false"
-                        }
-                      />
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant="outline"
-                        className="absolute bottom-2 right-2 h-10 w-10 p-0 rounded-full bg-white hover:bg-gray-50 border-gray-300 text-lg"
-                        onClick={handleGenerateContent}
-                      >
-                        ֎
-                      </Button>
-                    </div>
-                  </FormControl>
-                  <FormDescription>
-                    This is an optional prompt to guide your blog content.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Content</FormLabel>
+                  <div className="flex items-center justify-between">
+                    <FormLabel>Content</FormLabel>
+                    <AIContentGeneratorDialog
+                      onContentGenerated={handleContentGenerated}
+                      triggerText="Generate with AI"
+                      triggerVariant="outline"
+                      triggerSize="sm"
+                    />
+                  </div>
                   <FormControl>
                     <Textarea
                       placeholder="Write your blog content here..."
@@ -178,7 +137,8 @@ export function BlogForm({
                     />
                   </FormControl>
                   <FormDescription>
-                    Write the main content of your blog post.
+                    Write the main content of your blog post, or use AI to
+                    generate it.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
