@@ -30,7 +30,7 @@ export default function Navbar() {
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <NavLink to="/" className="flex items-center">
-                <span className="text-2xl font-bold text-primary">BlogApp</span>
+                <span className="text-2xl font-bold text-primary">CMS</span>
               </NavLink>
             </div>
             <div className="hidden md:ml-6 md:flex md:space-x-8">
@@ -60,22 +60,6 @@ export default function Navbar() {
               >
                 Blogs
               </NavLink>
-              {isAuthenticated && (
-                <NavLink
-                  to="/dashboard"
-                  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                >
-                  Dashboard
-                </NavLink>
-              )}
-              {isAuthenticated && user?.role === "admin" && (
-                <NavLink
-                  to="/admin"
-                  className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                >
-                  Admin
-                </NavLink>
-              )}
             </div>
           </div>
 
@@ -121,12 +105,12 @@ export default function Navbar() {
                       Your Profile
                     </NavLink>
                     <NavLink
-                      to="/blogs/new"
+                      to="/dashboard"
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
-                      <span className="w-4 h-4 mr-2">📝</span>
-                      New Blog
+                      <span className="w-4 h-4 mr-2">📊</span>
+                      Dashboard
                     </NavLink>
                     <button
                       onClick={handleLogout}

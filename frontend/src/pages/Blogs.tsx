@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getPublicBlogs } from "@/services/blog";
-import { Button } from "@/components/ui/button";
 import {
   Calendar,
   User,
@@ -122,9 +121,6 @@ export default function Blogs() {
               </button>
             )}
           </div>
-          <Link to="/blogs/new">
-            <Button>Create New</Button>
-          </Link>
         </div>
       </div>
 
@@ -197,11 +193,6 @@ export default function Blogs() {
                 : "There are no blog posts available yet."}
             </CardDescription>
           </CardContent>
-          <CardFooter className="flex justify-center">
-            <Link to="/blogs/new">
-              <Button>Create your first blog</Button>
-            </Link>
-          </CardFooter>
         </Card>
       )}
     </div>

@@ -8,7 +8,7 @@ export const getPublicBlogs = async () => {
 };
 
 export const getPublicBlogById = async (id: number) => {
-  const response = await request<Blog[]>("GET", `/public/blogs/${id}`);
+  const response = await request<Blog>("GET", `/public/blogs/${id}`);
   return response;
 };
 
