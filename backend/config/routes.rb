@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resource :profile, only: [:show, :update]
 
   post "generate" => "content#generate"
-  post 'generate_stream', to: 'content#generate_stream'
+  get 'generate_stream', to: 'content#generate_stream'
 
   resources :blogs do
     member do

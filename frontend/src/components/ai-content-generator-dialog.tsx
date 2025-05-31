@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -13,7 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { generateText } from "@/services/genai";
 
 interface AIContentGeneratorDialogProps {
   onContentGenerated?: (content: string) => void;
@@ -41,6 +40,16 @@ export function AIContentGeneratorDialog({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const eventSourceRef = useRef<EventSource | null>(null);
+
+  // Cleanup EventSource on component unmount or dialog close
+  useEffect(() => {
+    return () => {
+      if (eventSourceRef.current) {
+        eventSourceRef.current.close();
+      }
+    };
+  }, []);
 
   const handleGenerate = async () => {
     if (!prompt.trim()) {
@@ -48,12 +57,59 @@ export function AIContentGeneratorDialog({
     }
 
     setIsGenerating(true);
+    setGeneratedContent(""); // Clear previous content
+
+    // Close any existing EventSource
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
+    }
+
     try {
-      const response = await generateText(prompt);
-      if (response.payload) {
-        setGeneratedContent(response.payload.content);
-      }
-    } finally {
+      const eventSource = new EventSource(
+        `http://localhost:3000/generate_stream?prompt=${encodeURIComponent(
+          prompt
+        )}`
+      );
+
+      eventSourceRef.current = eventSource;
+
+      eventSource.onmessage = (event) => {
+        if (event.data === "[DONE]") {
+          eventSource.close();
+          eventSourceRef.current = null;
+          setIsGenerating(false);
+          return;
+        }
+
+        try {
+          const chunk = JSON.parse(event.data);
+
+          // Check if it's an error
+          if (chunk.error) {
+            console.error("Stream error:", chunk.error);
+            eventSource.close();
+            eventSourceRef.current = null;
+            setIsGenerating(false);
+            return;
+          }
+
+          console.log("Received chunk:", chunk);
+
+          // Append the chunk to the generated content
+          setGeneratedContent((prev) => prev + chunk);
+        } catch (parseError) {
+          console.error("Failed to parse chunk:", parseError);
+        }
+      };
+
+      eventSource.onerror = (error) => {
+        console.error("EventSource error:", error);
+        eventSource.close();
+        eventSourceRef.current = null;
+        setIsGenerating(false);
+      };
+    } catch (error) {
+      console.error("Failed to start streaming:", error);
       setIsGenerating(false);
     }
   };
@@ -83,6 +139,14 @@ export function AIContentGeneratorDialog({
     setPrompt("");
     setGeneratedContent("");
     setIsCopied(false);
+
+    // Close any active EventSource
+    if (eventSourceRef.current) {
+      eventSourceRef.current.close();
+      eventSourceRef.current = null;
+    }
+
+    setIsGenerating(false);
   };
 
   return (
