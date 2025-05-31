@@ -27,14 +27,18 @@ const blogSchema = z.object({
     .max(100, {
       message: "Title must not exceed 100 characters.",
     }),
-  content: z
+  prompt: z
     .string()
-    .min(10, {
-      message: "Content must be at least 10 characters.",
+    .min(5, {
+      message: "Prompt must be at least 5 characters.",
     })
-    .max(5000, {
-      message: "Content must not exceed 5000 characters.",
-    }),
+    .max(1000, {
+      message: "Prompt must not exceed 1000 characters.",
+    })
+    .optional(),
+  content: z.string().min(10, {
+    message: "Content must be at least 10 characters.",
+  }),
   published: z.boolean(),
 });
 
@@ -59,6 +63,7 @@ export function BlogForm({
     resolver: zodResolver(blogSchema),
     defaultValues: {
       title: initialData?.title || "",
+      prompt: initialData?.prompt || "",
       content: initialData?.content || "",
       published: initialData?.published || false,
     },
@@ -85,7 +90,10 @@ export function BlogForm({
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-6"
+          >
             <FormField
               control={form.control}
               name="title"
@@ -103,6 +111,30 @@ export function BlogForm({
                   </FormControl>
                   <FormDescription>
                     This will be the title of your blog post.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="prompt"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Prompt (Optional)</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter a prompt for your blog post..."
+                      className="min-h-[100px]"
+                      {...field}
+                      aria-invalid={
+                        form.formState.errors.prompt ? "true" : "false"
+                      }
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    This is an optional prompt to guide your blog content.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

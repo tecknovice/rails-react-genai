@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_13_140341) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_31_051435) do
   create_table "blogs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -18,6 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_13_140341) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.boolean "published", default: false
+    t.text "prompt"
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 

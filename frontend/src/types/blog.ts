@@ -2,6 +2,7 @@ export type Blog = {
   id: number;
   title: string;
   content: string;
+  prompt: string;
   published: boolean;
   user_id: number;
   created_at: string;
@@ -18,6 +19,7 @@ export type Blog = {
 export type CreateBlogInput = {
   title: string;
   content: string;
+  prompt: string;
   published?: boolean;
 };
 

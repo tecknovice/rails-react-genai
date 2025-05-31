@@ -133,7 +133,7 @@ export default function BlogList() {
   };
 
   const handleView = (id: number) => {
-    navigate(`/blog/${id}`);
+    navigate(`/blogs/${id}`);
   };
 
   return (
@@ -169,7 +169,7 @@ export default function BlogList() {
             Create your first blog post to get started.
           </p>
           <Button asChild>
-            <Link to="/dashboard/blog/new">Create Blog</Link>
+            <Link to="/dashboard/blog/add">Create Blog</Link>
           </Button>
         </div>
       ) : (

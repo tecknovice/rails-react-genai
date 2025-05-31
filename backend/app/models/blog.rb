@@ -4,6 +4,7 @@ class Blog < ApplicationRecord
   # Validations
   validates :title, presence: true
   validates :content, presence: true
+  validates :prompt, presence: true
   
   # Scope for published blogs (useful for queries)
   scope :published, -> { where(published: true) }
