@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Blog } from "@/types/blog";
+import { generateText } from "@/services/genai";
 
 const blogSchema = z.object({
   title: z
@@ -73,6 +74,14 @@ export function BlogForm({
     onSubmit(values);
   }
 
+  const handleGenerateContent = async () => {
+    const prompt = form.getValues("prompt");
+    if (prompt) {
+      const response = await generateText(prompt);
+      if (response.payload) form.setValue("content", response.payload.content);
+    }
+  };
+
   const isEditing = mode === "edit";
 
   return (
@@ -124,14 +133,25 @@ export function BlogForm({
                 <FormItem>
                   <FormLabel>Prompt (Optional)</FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="Enter a prompt for your blog post..."
-                      className="min-h-[100px]"
-                      {...field}
-                      aria-invalid={
-                        form.formState.errors.prompt ? "true" : "false"
-                      }
-                    />
+                    <div className="relative">
+                      <Textarea
+                        placeholder="Enter a prompt for your blog post..."
+                        className="min-h-[100px] pr-28"
+                        {...field}
+                        aria-invalid={
+                          form.formState.errors.prompt ? "true" : "false"
+                        }
+                      />
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="absolute bottom-2 right-2 h-10 w-10 p-0 rounded-full bg-white hover:bg-gray-50 border-gray-300 text-lg"
+                        onClick={handleGenerateContent}
+                      >
+                        ֎
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormDescription>
                     This is an optional prompt to guide your blog content.

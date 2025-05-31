@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :update]
 
+  post "generate" => "content#generate", as: :generate_content
+
   resources :blogs do
     member do
       patch :publish
